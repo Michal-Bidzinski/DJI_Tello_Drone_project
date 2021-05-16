@@ -30,6 +30,10 @@ def main():
     drone = telloInit()
     keyboardInit()
 
+    # define video writer
+    fourcc = cv2.VideoWriter_fourcc(*'MP4V')
+    out = cv2.VideoWriter('output2.mp4', fourcc, 20.0, (640, 480))
+
     # main loop
     while True:
         # get keyboatd inputs
@@ -57,16 +61,22 @@ def main():
         else:
             print("do circle")
             if it <= 2:
-                drone.send_rc_control(-12, 0, 0, 0)
+                # drone.send_rc_control(-12, 0, 0, 0)
                 it += 1
             if it > 2:
-                drone.send_rc_control(-12, 0, 0, 50)
+                # drone.send_rc_control(-12, 0, 0, 60)
                 it += 1
             if it > 5:
                 it = 0
+            out.write(img)
 
         cv2.imshow("Image", img)
-        cv2.waitKey(1)
+        c = cv2.waitKey(1)
+        if c & 0xFF == ord('q'):
+            break
+
+    out.release()
+    cv2.destroyAllWindows()
 
 
 if __name__ == '__main__':
