@@ -4,6 +4,7 @@ import cv2
 from utils.keyboard_input import getKeyboardInput
 from utils.cascade_calssifier import findFace, findSmile
 from utils.face_tracking import trackFace
+from time import sleep
 
 kp.init()
 me = tello.Tello()
@@ -21,31 +22,50 @@ pError_fb = 0
 
 do_scan = False
 
+it = 0
+it_all = 0
 
 while True:
     vals = getKeyboardInput(me)
     img = me.get_frame_read().frame
     img = cv2.resize(img, (360, 240))
 
+    img, infoFace = findFace(img)
+    img, infoSmile = findSmile(img)
+
+    do_scan = vals[4]
+
     if not do_scan:
-        img, infoFace = findFace(img)
-        img, infoSmile = findSmile(img)
 
         print("Face: ", infoFace)
         print("Smile: ", infoSmile)
         if infoFace[1] != 0:
-            if (infoFace[0][1]+10) < infoSmile[0][1] < (infoFace[0][1] + infoFace[2][1]/2 - 10): 
+            if ((infoFace[0][1] + 10) < infoSmile[0][1] < (infoFace[0][1] + infoFace[2][1] / 2 - 15)
+                    and (infoFace[0][0] - 80) < infoSmile[0][0] < (infoFace[0][0] + 80)):
                 print("SMILE DETECT ################################################")
-                do_scan = True
+                # do_scan = True
 
         pError_x, pError_y, pError_fb, yv, fb, up = trackFace(infoFace, w, h, pid, pError_x, pError_y, pError_fb)
 
-        # me.send_rc_control(0, fb, up, yv)
+        me.send_rc_control(0, fb, up, yv)
 
         # print(yv, fb)
 
     else:
         print("do circle")
+        if 208 < it_all < 213:
+            me.send_rc_control(0, 0, -20, 0)
+        else:
+            if it <= 2:
+                me.send_rc_control(-20, 0, 0, 0)
+                it += 1
+            elif it > 2:
+                me.send_rc_control(-20, 0, 0, 50)
+                it += 1
+            if it > 5:
+                it = 0
+        it_all += 1
+        print(it_all)
 
     cv2.imshow("Image", img)
     cv2.waitKey(1)

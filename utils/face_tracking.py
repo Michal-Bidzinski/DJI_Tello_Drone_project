@@ -17,7 +17,7 @@ def trackFace(info, w, h, pid, pError_x, pError_y, pError_fb):
     up = -1*int(np.clip(up, -100, 100))
 
     # forward/backward
-    error_fb = area - 6200
+    error_fb = area - 4800
     fb = 0.005 * error_fb + 0.005 * (error_fb - pError_fb)
     fb = -1*int(np.clip(fb, -30, 30))
 

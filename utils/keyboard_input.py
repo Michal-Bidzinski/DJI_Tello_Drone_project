@@ -2,6 +2,9 @@ import KeyPressModule as kp
 import time
 
 
+circle = False
+
+
 def keyboardInit():
     kp.init()
 
@@ -9,6 +12,7 @@ def keyboardInit():
 def getKeyboardInput(drone):
     lr, fb, up, yv = 0, 0, 0, 0
     speed = 50
+    global circle
 
     # left and right steering
     if kp.getKey("LEFT"): lr = -speed
@@ -26,8 +30,12 @@ def getKeyboardInput(drone):
     if kp.getKey("a"): yv = -int(speed*1.5)
     elif kp.getKey("d"): yv = int(speed*1.5)
 
+    # do circle
+    if kp.getKey("z"): circle = True
+    elif kp.getKey("x"): circle = False
+
     # land and takeoff
-    if kp.getKey("q"): drone.land(); time.sleep(3)
+    if kp.getKey("q"): drone.land(); time.sleep(10)
     if kp.getKey("e"): drone.takeoff()
 
-    return [lr, fb, up, yv]
+    return [lr, fb, up, yv, circle]

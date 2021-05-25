@@ -31,7 +31,7 @@ def findSmile(img):
     # smile detection
     smileCascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_smile.xml')
     imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    smiles = smileCascade.detectMultiScale(imgGray, 1.3, 11)
+    smiles = smileCascade.detectMultiScale(imgGray, 1.4, 11)
 
     mySmileListC = []
     mySmileListArea = []
