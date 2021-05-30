@@ -25,6 +25,10 @@ do_scan = False
 it = 0
 it_all = 0
 
+# define video writer
+fourcc = cv2.VideoWriter_fourcc(*'MP4V')
+out = cv2.VideoWriter('output.mp4', fourcc, 20.0, (640, 480))
+
 while True:
     vals = getKeyboardInput(me)
     img = me.get_frame_read().frame
@@ -66,6 +70,12 @@ while True:
                 it = 0
         it_all += 1
         print(it_all)
+        out.write(img)
 
     cv2.imshow("Image", img)
-    cv2.waitKey(1)
+    c = cv2.waitKey(1)
+    if c & 0xFF == ord('q'):
+        break
+
+out.release()
+cv2.destroyAllWindows()
