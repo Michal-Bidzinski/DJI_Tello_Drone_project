@@ -2,6 +2,10 @@
 
 Follow the face of the drone and create a 3D model of the head. Thanks to the DJI Tello drone and the program located in this repository, it is very simple. The drone uses a camera to send images to the user's computer, where face detection takes place and appropriate control is generated. 
 
+## Face detection
+ 
+A cascade classifier was used for face detection. The implementation from the OpenCV library was used and downloaded a list of features for face detection. During the tests, greater efficiency was achieved in well-lit places. 
+
 ## Cloning the repository
 To clone the repository use the following lines:
 ```
