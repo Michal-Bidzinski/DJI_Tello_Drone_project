@@ -35,8 +35,12 @@ Now you can use the keyboard to perform the following actions:
 - "z" key - starting the data collection sequence for the 3D model - the drone flies in a circle around the head, recording a video needed to reconstruct the model
 - "x" key - end of data collection sequence 
 
-After the drone has taken off and the desired height is reached, the drone remains in a fixed position until it detects a face. When detected, depending on where it is in the camera image, the drone rotates, moves forward or backward, rises or descends so that the face is in the center of the image and the drone is at the correct distance from the head. 
+After the drone has taken off and the desired height is reached, the drone remains in a fixed position until it detects a face. When detected, depending on where it is in the camera image, the drone rotates, moves forward or backward, rises or descends so that the face is in the center of the image and the drone is at the correct distance from the head. PID regulators are used to perform the above-mentioned movements, thanks to which the drone does not make long movements. 
 
+
+## Notes and warnings
+
+The lap sequence is very sensitive to gusts of wind, so it should be done indoors. In order for the sequence to be performed as accurately as possible, it is worth ensuring a flat surface under the drone. 
 
 
 
