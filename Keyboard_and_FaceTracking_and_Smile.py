@@ -6,7 +6,7 @@ from utils.cascade_calssifier import findFace, findSmile
 from utils.face_tracking import trackFace
 from time import sleep
 
-kp.init()
+# kp.init()
 me = tello.Tello()
 me.connect()
 print(me.get_battery())
